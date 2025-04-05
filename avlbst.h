@@ -236,20 +236,31 @@ void AVLTree<Key, Value>::remove(const Key& key)
     }
     // Case 3: Two children
     else {
+      ///error
         AVLNode<Key, Value>* pred = static_cast<AVLNode<Key, Value>*>(this->predecessor(node));
         nodeSwap(node, pred);
-        AVLNode<Key, Value>* newParent = pred->getParent();
-        if (newParent->getLeft() == pred) {
-            newParent->setLeft(pred->getLeft());
+
+        AVLNode<Key, Value>* child = (node->getLeft() !=NULL)? node->getLeft() : node->getRight();
+        parent = node->getParent();
+
+
+        if(child !=NULL){
+          child->setParent(parent);
         }
-        else {
-            newParent->setRight(pred->getLeft());
+        if (parent==NULL){
+          this->root_=child;
         }
-        if (pred->getLeft() != NULL) {
-            pred->getLeft()->setParent(newParent);
+        else{
+          if (parent->getLeft()==node){
+            parent-setLeft(child);
+          }
+          else{
+            parent->setRight(child);
+          }
         }
-        delete pred;
-        parent = newParent; // Balance from here
+        delete node;
+        
+      ///error
     }
 
     // Balance from the parent up to root
