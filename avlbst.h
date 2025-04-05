@@ -253,6 +253,7 @@ void AVLTree<Key, Value>::remove(const Key& key)
         else{
           if (parent->getLeft()==node){
             parent->setLeft(child);
+            //test
           }
           else{
             parent->setRight(child);
